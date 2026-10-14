@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   PEAK BIKES DESIGN SYSTEM — GLOBAL STYLES
+   ============================================= */
+
+:root {
+  --pb-black:       #050d0a;
+  --pb-black-deep:  #020804;
+  --pb-black-card:  #0a1612;
+  --pb-orange:      #ff5c00;
+  --pb-orange-dark: #cc4900;
+  --pb-white:       #ffffff;
+  --pb-border:      #1a3020;
+  --pb-muted:       #7a9088;
+  --pb-header-height: 72px;
+  --pb-transition:  cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--pb-black);
+  color: white;
+  font-family: 'Barlow', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--pb-black-deep); }
+::-webkit-scrollbar-thumb { background: #1a3020; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--pb-orange); }
+
+/* =============================================
+   TYPOGRAPHY
+   ============================================= */
+.pb-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.pb-section-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   HIDE SCROLLBAR (RAILS)
+   ============================================= */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* =============================================
+   GLASSMORPHISM NAV
+   ============================================= */
+.glass-nav {
+  background: rgba(5, 13, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-nav-solid {
+  background: rgba(5, 13, 10, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(26, 48, 32, 0.8);
+}
+
+/* =============================================
+   CARD HOVER EFFECTS
+   ============================================= */
+.pb-card-hover {
+  transition: transform 0.4s var(--pb-transition), box-shadow 0.4s var(--pb-transition);
+}
+.pb-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,92,0,0.1);
+}
+
+.pb-img-zoom img {
+  transition: transform 0.6s var(--pb-transition);
+}
+.pb-img-zoom:hover img {
+  transform: scale(1.07);
+}
+
+/* =============================================
+   ORANGE GLOW EFFECT
+   ============================================= */
+.pb-glow {
+  box-shadow: 0 0 30px rgba(255, 92, 0, 0.35), 0 0 60px rgba(255, 92, 0, 0.15);
+}
+
+.pb-glow-text {
+  text-shadow: 0 0 40px rgba(255, 92, 0, 0.6);
+}
+
+/* =============================================
+   PROGRESS BAR ANIMATION
+   ============================================= */
+@keyframes progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.progress-animate {
+  animation: progress linear forwards;
+}
+
+/* =============================================
+   NAVIGATION DRAWER OVERLAY
+   ============================================= */
+.nav-overlay {
+  background: rgba(2, 8, 4, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+/* =============================================
+   DRAG CURSOR FOR RAILS
+   ============================================= */
+.draggable-rail {
+  cursor: grab;
+  user-select: none;
+}
+.draggable-rail:active {
+  cursor: grabbing;
+}
+
+/* =============================================
+   BUTTON VARIANTS
+   ============================================= */
+.pb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pb-orange);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.pb-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.pb-btn-primary:hover {
+  background: var(--pb-orange-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 92, 0, 0.4);
+}
+.pb-btn-primary:hover::before { opacity: 1; }
+
+.pb-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 11px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+.pb-btn-outline:hover {
+  border-color: rgba(255, 92, 0, 0.7);
+  background: rgba(255, 92, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.pb-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 0;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.pb-btn-ghost:hover { color: var(--pb-orange); }
+
+/* =============================================
+   SECTION SPACING
+   ============================================= */
+.pb-section {
+  padding: 80px 0;
+}
+
+@media (max-width: 768px) {
+  .pb-section { padding: 48px 0; }
+}
+
+/* =============================================
+   CATEGORY PILL / TAG
+   ============================================= */
+.pb-tag {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  background: var(--pb-orange);
+  color: white;
+}
+
+.pb-tag-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.75);
+}
+
+.pb-tag-sale {
+  background: #ef4444;
+}
+
+.pb-tag-new {
+  background: var(--pb-orange);
+}
+
+/* =============================================
+   MEGA MENU
+   ============================================= */
+.mega-menu {
+  background: rgba(5, 13, 10, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(26, 48, 32, 0.8);
+}
+
+/* =============================================
+   SECTION DIVIDER ACCENT
+   ============================================= */
+.pb-accent-line::before {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--pb-orange);
+  margin-bottom: 16px;
+  border-radius: 2px;
+}
+
+/* =============================================
+   CINEMATIC HERO STYLES
+   ============================================= */
+.hero-text-shadow {
+  text-shadow: 0 4px 32px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Transition for all interactive elements */
+a, button { transition: all 0.2s ease; }
+a { text-decoration: none; color: inherit; }
+
+/* =============================================
+   PRODUCT CARD PRICE
+   ============================================= */
+.price-was {
+  text-decoration: line-through;
+  color: var(--pb-muted);
+  font-size: 0.85em;
+}
+
+/* =============================================
+   SMOOTH SCROLL SNAP
+   ============================================= */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+}
+.scroll-snap-item {
+  scroll-snap-align: start;
+}
