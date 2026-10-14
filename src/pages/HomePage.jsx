@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import CinematicHero from '../components/hero/CinematicHero.jsx'
+import ThreeDCanScroll from '../components/ThreeDCanScroll.jsx'
 import BrandBar from '../components/sections/BrandBar.jsx'
 import PromoLockup from '../components/sections/PromoLockup.jsx'
 import ProductSlider from '../components/sections/ProductSlider.jsx'
@@ -17,7 +18,10 @@ export default function HomePage() {
       {/* 1. Cinematic hero with 3D scroll parallax */}
       <CinematicHero />
 
-      {/* 2. Brand bar ticker */}
+      {/* 2. Flagship 3D Can Scroll Experience — UNTOUCHED from Red Bull */}
+      <ThreeDCanScroll />
+
+      {/* 3. Brand bar ticker */}
       <BrandBar />
 
       {/* 3. Promo lockup row 1 — OneTwo */}

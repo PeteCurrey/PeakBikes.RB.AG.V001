@@ -17,6 +17,12 @@
   --pb-muted:       #7a9088;
   --pb-header-height: 72px;
   --pb-transition:  cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Red Bull tokens — required by ThreeDCanScroll (copied verbatim) */
+  --rb-navy:       #000f1e;
+  --rb-navy-deep:  #00162b;
+  --rb-red:        #db0a40;
+  --rb-yellow:     #ffcc00;
 }
 
 *, *::before, *::after {
@@ -305,25 +311,79 @@ body {
   text-shadow: 0 4px 32px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.5);
 }
 
-/* Transition for all interactive elements */
-a, button { transition: all 0.2s ease; }
-a { text-decoration: none; color: inherit; }
-
 /* =============================================
-   PRODUCT CARD PRICE
+   RED BULL COMPONENT CSS — required by ThreeDCanScroll
+   Copied verbatim from Red Bull index.css
    ============================================= */
-.price-was {
-  text-decoration: line-through;
-  color: var(--pb-muted);
-  font-size: 0.85em;
+.rb-title {
+  font-family: 'Barlow Condensed', Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1.0;
 }
 
-/* =============================================
-   SMOOTH SCROLL SNAP
-   ============================================= */
-.scroll-snap-x {
-  scroll-snap-type: x mandatory;
+.rb-tag {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: var(--rb-red);
+  color: white;
 }
-.scroll-snap-item {
-  scroll-snap-align: start;
+
+.rb-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--rb-red);
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  border: none;
+  cursor: pointer;
 }
+.rb-btn-primary:hover { background: #c0082f; }
+
+.rb-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: white;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+}
+.rb-btn-outline:hover {
+  border-color: white;
+  background: rgba(255,255,255,0.08);
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+.live-pulse {
+  animation: live-pulse 1.5s ease-in-out infinite;
+}
+
