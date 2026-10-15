@@ -22,6 +22,7 @@ dist-ssr/
 # OS files
 .DS_Store
 Thumbs.db
+/Peak Bikes.png
 
 # Logs
 *.log

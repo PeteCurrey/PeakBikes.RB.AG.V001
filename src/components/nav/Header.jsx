@@ -31,7 +31,12 @@ function PeakLogo() {
 
 export default function Header() {
   const { openCart, openSearch, cartCount, wishlist } = useCart()
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.scrollY > 20
+    }
+    return false
+  })
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const menuTimeout = useRef(null)
@@ -39,8 +44,16 @@ export default function Header() {
   const { scrollY } = useScroll()
 
   useMotionValueEvent(scrollY, 'change', (val) => {
-    setScrolled(val > 60)
+    setScrolled(val > 20)
   })
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Close mega menu on escape
   useEffect(() => {
@@ -66,7 +79,7 @@ export default function Header() {
         <SiteWideBanner />
         <motion.header
           className={`w-full transition-all duration-300 ${
-            scrolled || activeMenu ? 'glass-nav-solid shadow-2xl' : 'glass-nav'
+            scrolled || activeMenu ? 'glass-nav shadow-xl' : 'nav-transparent'
           }`}
           style={{ height: 'var(--pb-header-height)' }}
         >
