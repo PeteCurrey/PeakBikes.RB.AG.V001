@@ -36,13 +36,11 @@ export default function CinematicHero() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20 })
 
   // Parallax layers at different depths (Red Bull 3D scroll pattern)
-  const bgY           = useTransform(smoothProgress, [0, 1], ['0%', '25%'])     // slowest — deep bg
+  const bgY           = useTransform(smoothProgress, [0, 1], ['0%', '20%'])     // slowest — deep bg
   const midY          = useTransform(smoothProgress, [0, 1], ['0%', '15%'])     // mid layer
-  const bikeScale     = useTransform(smoothProgress, [0, 0.5], [1, 1.08])       // subtle zoom-in
-  const bikeY         = useTransform(smoothProgress, [0, 1], ['0%', '-10%'])    // floats slightly
   const textY         = useTransform(smoothProgress, [0, 0.6], ['0%', '-25%'])  // fastest — text scrolls away
   const textOpacity   = useTransform(smoothProgress, [0, 0.45], [1, 0])
-  const overlayOpacity= useTransform(smoothProgress, [0, 0.5], [0.55, 0.85])   // darkens on scroll
+  const overlayOpacity= useTransform(smoothProgress, [0, 0.5], [0.25, 0.75])   // darkens on scroll
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
 
   return (
@@ -51,16 +49,16 @@ export default function CinematicHero() {
       className="relative w-full h-screen min-h-[600px] max-h-[1000px] overflow-hidden"
       aria-label="Hero section"
     >
-      {/* ── LAYER 1: Deep background (slowest parallax) ── */}
+      {/* ── LAYER 1: Deep background (Peak Bikes hero photography) ── */}
       <motion.div
         className="absolute inset-0 will-change-transform"
         style={{ y: bgY, scale: 1.15 }}
       >
         <img
-          src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1800&q=85"
-          alt=""
+          src="/peak-bikes-hero.png"
+          alt="Peak Bikes Mountain Cycling"
           role="presentation"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-[center_right] sm:object-center"
           fetchpriority="high"
         />
       </motion.div>
@@ -71,31 +69,17 @@ export default function CinematicHero() {
         style={{ opacity: overlayOpacity }}
       />
 
-      {/* Gradient overlays for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-pb-black via-pb-black/10 to-pb-black/30 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-pb-black/60 via-transparent to-transparent pointer-events-none" />
+      {/* Gradient overlays for depth and typography legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-pb-black via-transparent to-pb-black/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-pb-black/90 via-pb-black/40 to-transparent pointer-events-none" />
 
       {/* ── LAYER 3: Mid - floating particle accents ── */}
       <motion.div className="absolute inset-0 pointer-events-none" style={{ y: midY }}>
-        {/* Orange glow orb behind where bike would be */}
+        {/* Subtle orange ambient glow */}
         <div
-          className="absolute right-[15%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(255,92,0,0.6), transparent 70%)' }}
+          className="absolute right-[20%] top-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full opacity-20 blur-3xl"
+          style={{ background: 'radial-gradient(circle, rgba(255,92,0,0.5), transparent 70%)' }}
         />
-      </motion.div>
-
-      {/* ── LAYER 4: Feature bike (mid parallax + scale) ── */}
-      <motion.div
-        className="absolute right-0 top-0 bottom-0 w-1/2 will-change-transform"
-        style={{ y: bikeY, scale: bikeScale }}
-      >
-        <img
-          src="https://images.unsplash.com/photo-1558981852-426c349336fa?w=1000&q=85"
-          alt="Peak Bikes Enduro Carbon Pro"
-          className="w-full h-full object-cover object-left opacity-30"
-        />
-        {/* Right-side fade */}
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-pb-black/90 pointer-events-none" />
       </motion.div>
 
       {/* ── LAYER 5: Hero text (fastest — scrolls away first) ── */}
