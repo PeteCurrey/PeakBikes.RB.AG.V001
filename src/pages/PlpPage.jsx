@@ -17,7 +17,7 @@ export default function PlpPage({ title = 'All Bikes' }) {
     : products.filter(p => p.category === activeCategory)
 
   return (
-    <div className="pt-[var(--pb-header-height)] min-h-screen">
+    <div className="pt-[var(--pb-nav-height,112px)] min-h-screen">
       {/* Page header */}
       <div className="bg-pb-black-card border-b border-pb-border">
         <div className="max-w-7xl mx-auto px-6 py-8">
@@ -35,7 +35,7 @@ export default function PlpPage({ title = 'All Bikes' }) {
       </div>
 
       {/* Filter bar */}
-      <div className="bg-pb-black-card border-b border-pb-border sticky top-[var(--pb-header-height)] z-20">
+      <div className="bg-pb-black-card border-b border-pb-border sticky top-[var(--pb-nav-height,112px)] z-20">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center gap-4 overflow-x-auto hide-scrollbar">
           {/* Category pills */}
           <div className="flex items-center gap-2 flex-shrink-0">

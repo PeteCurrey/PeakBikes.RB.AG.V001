@@ -34,7 +34,7 @@ export default function PdpPage() {
   const saveAmount = hasSale ? product.rrp - product.price : null
 
   return (
-    <div className="pt-[var(--pb-header-height)] min-h-screen">
+    <div className="pt-[var(--pb-nav-height,112px)] min-h-screen">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-6 py-4">
         <nav className="flex items-center gap-2 text-xs font-body text-pb-muted">

@@ -4,6 +4,7 @@ import { Search, Heart, ShoppingCart, Menu, User, MapPin } from 'lucide-react'
 import { navigation } from '../../data/navigation.js'
 import MegaMenu from './MegaMenu.jsx'
 import MobileDrawer from './MobileDrawer.jsx'
+import SiteWideBanner from './SiteWideBanner.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 
 // Peak Bikes Logo SVG
@@ -61,12 +62,14 @@ export default function Header() {
 
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled || activeMenu ? 'glass-nav-solid shadow-2xl' : 'glass-nav'
-        }`}
-        style={{ height: 'var(--pb-header-height)' }}
-      >
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <SiteWideBanner />
+        <motion.header
+          className={`w-full transition-all duration-300 ${
+            scrolled || activeMenu ? 'glass-nav-solid shadow-2xl' : 'glass-nav'
+          }`}
+          style={{ height: 'var(--pb-header-height)' }}
+        >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center gap-6">
 
           {/* Mobile hamburger */}
@@ -181,9 +184,10 @@ export default function Header() {
           />
         </div>
       </motion.header>
+    </div>
 
-      {/* Mobile drawer */}
-      <MobileDrawer isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-    </>
-  )
+    {/* Mobile drawer */}
+    <MobileDrawer isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+  </>
+)
 }

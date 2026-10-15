@@ -16,7 +16,7 @@ export default function MegaMenu({ item, isOpen, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[var(--pb-header-height)] bg-pb-black/60 backdrop-blur-sm z-30"
+            className="fixed inset-0 top-[var(--pb-nav-height,112px)] bg-pb-black/60 backdrop-blur-sm z-30"
             onClick={onClose}
           />
 

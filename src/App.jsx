@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/nav/Header.jsx'
-import SiteWideBanner from './components/nav/SiteWideBanner.jsx'
 import Footer from './components/footer/Footer.jsx'
 import CartDrawer from './components/cart/CartDrawer.jsx'
 import SearchModal from './components/search/SearchModal.jsx'
@@ -14,7 +13,6 @@ import PdpPage from './pages/PdpPage.jsx'
 function Layout({ children }) {
   return (
     <div className="flex flex-col min-h-screen bg-pb-black">
-      <SiteWideBanner />
       <Header />
       <main className="flex-1">
         {children}

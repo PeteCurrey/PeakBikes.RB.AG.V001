@@ -16,6 +16,7 @@
   --pb-border:      #1a3020;
   --pb-muted:       #7a9088;
   --pb-header-height: 72px;
+  --pb-nav-height: 112px;
   --pb-transition:  cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Red Bull tokens — required by ThreeDCanScroll (copied verbatim) */
