@@ -4,6 +4,7 @@ import { Search, Heart, ShoppingCart, Menu, User, MapPin } from 'lucide-react'
 import { navigation } from '../../data/navigation.js'
 import MegaMenu from './MegaMenu.jsx'
 import MobileDrawer from './MobileDrawer.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 
 // Peak Bikes Logo SVG
 function PeakLogo() {
@@ -28,6 +29,7 @@ function PeakLogo() {
 }
 
 export default function Header() {
+  const { openCart, openSearch, cartCount, wishlist } = useCart()
   const [scrolled, setScrolled] = useState(false)
   const [activeMenu, setActiveMenu] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -125,23 +127,43 @@ export default function Header() {
 
           {/* Icon actions */}
           <div className="flex items-center gap-1 ml-auto lg:ml-0 flex-shrink-0">
-            <button className="w-10 h-10 flex items-center justify-center text-pb-silver hover:text-white transition-colors group" aria-label="Search">
+            <button
+              onClick={openSearch}
+              className="w-10 h-10 flex items-center justify-center text-pb-silver hover:text-white transition-colors group"
+              aria-label="Search"
+            >
               <Search size={19} className="group-hover:scale-105 transition-transform" />
             </button>
-            <button className="w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors" aria-label="Account">
+            <a
+              href="/bikes"
+              className="w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors"
+              aria-label="Account"
+            >
               <User size={19} />
-            </button>
-            <button className="w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors" aria-label="Wishlist">
-              <Heart size={19} />
-            </button>
+            </a>
+            <a
+              href="/bikes"
+              className="relative w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors"
+              aria-label={`Wishlist (${wishlist.length} items)`}
+            >
+              <Heart size={19} className={wishlist.length > 0 ? 'text-pb-orange' : ''} />
+              {wishlist.length > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-pb-black-mid border border-pb-orange text-pb-orange rounded-full flex items-center justify-center text-[9px] font-display font-900">
+                  {wishlist.length}
+                </span>
+              )}
+            </a>
             <button
+              onClick={openCart}
               className="relative w-10 h-10 flex items-center justify-center text-pb-silver hover:text-white transition-colors"
-              aria-label="Basket (0 items)"
+              aria-label={`Basket (${cartCount} items)`}
             >
               <ShoppingCart size={19} />
-              <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-pb-orange rounded-full flex items-center justify-center text-white text-[9px] font-display font-900">
-                0
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-pb-orange rounded-full flex items-center justify-center text-white text-[9px] font-display font-900">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>

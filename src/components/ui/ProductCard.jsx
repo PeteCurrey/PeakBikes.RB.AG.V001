@@ -2,23 +2,31 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingCart, Eye } from 'lucide-react'
 import Badge from './Badge.jsx'
+import { useCart } from '../../context/CartContext.jsx'
 
 export default function ProductCard({ product, className = '' }) {
-  const [wishlisted, setWishlisted] = useState(false)
-  const [addedToCart, setAddedToCart] = useState(false)
+  const { addToCart, openQuickView, toggleWishlist, isWishlisted } = useCart()
+  const [addedAnim, setAddedAnim] = useState(false)
 
   const hasSale = product.rrp && product.rrp > product.price
   const saveAmount = hasSale ? product.rrp - product.price : null
+  const wish = isWishlisted(product.id)
 
   const handleAddToCart = (e) => {
     e.preventDefault()
-    setAddedToCart(true)
-    setTimeout(() => setAddedToCart(false), 1800)
+    addToCart(product, 1)
+    setAddedAnim(true)
+    setTimeout(() => setAddedAnim(false), 1200)
   }
 
   const handleWishlist = (e) => {
     e.preventDefault()
-    setWishlisted(w => !w)
+    toggleWishlist(product.id)
+  }
+
+  const handleQuickView = (e) => {
+    e.preventDefault()
+    openQuickView(product)
   }
 
   const badgeVariant =
@@ -57,23 +65,23 @@ export default function ProductCard({ product, className = '' }) {
         <button
           onClick={handleWishlist}
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-pb-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-pb-orange/20 hover:border-pb-orange/40"
-          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={wish ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           <Heart
             size={14}
-            className={wishlisted ? 'fill-pb-orange text-pb-orange' : 'text-white'}
+            className={wish ? 'fill-pb-orange text-pb-orange' : 'text-white'}
           />
         </button>
 
         {/* Quick view on hover */}
         <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] px-3 pb-3">
-          <a
-            href={`/products/${product.slug}`}
+          <button
+            onClick={handleQuickView}
             className="flex items-center justify-center gap-2 w-full py-2 bg-pb-black/80 backdrop-blur-sm border border-white/10 text-white text-xs font-display font-700 tracking-widest uppercase rounded-sm hover:bg-pb-orange/20 hover:border-pb-orange/30 transition-colors duration-150"
           >
             <Eye size={13} />
             Quick View
-          </a>
+          </button>
         </div>
       </a>
 
@@ -106,7 +114,7 @@ export default function ProductCard({ product, className = '' }) {
           <motion.button
             onClick={handleAddToCart}
             className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-sm text-xs font-display font-700 uppercase tracking-wide transition-all duration-200 ${
-              addedToCart
+              addedAnim
                 ? 'bg-pb-success text-white'
                 : 'bg-pb-orange text-white hover:bg-pb-orange-dark'
             }`}
@@ -114,7 +122,7 @@ export default function ProductCard({ product, className = '' }) {
             aria-label="Add to basket"
           >
             <ShoppingCart size={13} />
-            {addedToCart ? 'Added!' : 'Add'}
+            {addedAnim ? 'Added!' : 'Add'}
           </motion.button>
         </div>
 

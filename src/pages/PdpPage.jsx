@@ -1,18 +1,31 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShoppingCart, Heart, ChevronLeft, Star, Shield, Truck, RotateCcw, ArrowRight, Zap } from 'lucide-react'
 import { products } from '../data/products.js'
+import { useCart } from '../context/CartContext.jsx'
 
 export default function PdpPage() {
-  const product = products[0] // Example — in production, resolve from route param
+  const { slug } = useParams()
+  const { addToCart, toggleWishlist, isWishlisted } = useCart()
+
+  // Match product by slug or fallback to first product
+  const product = products.find(p => p.slug === slug) || products[0]
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
+  const [selectedSize, setSelectedSize] = useState('M')
   const [addedToCart, setAddedToCart] = useState(false)
-  const [wishlisted, setWishlisted] = useState(false)
 
-  const images = [product.image, product.image, product.image] // Placeholder — replace with real gallery
+  const wish = isWishlisted(product.id)
+
+  const images = [
+    product.image,
+    'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80',
+    'https://images.unsplash.com/photo-1558981852-426c349336fa?w=800&q=80'
+  ]
 
   const handleAddToCart = () => {
+    addToCart(product, quantity, selectedSize)
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2000)
   }
@@ -129,8 +142,30 @@ export default function PdpPage() {
                 {product.description}
               </p>
 
+              {/* Size Selector */}
+              <div className="mb-6">
+                <label className="block font-display font-700 text-xs uppercase tracking-widest text-pb-muted mb-2">
+                  Select Size: <span className="text-white">{selectedSize}</span>
+                </label>
+                <div className="flex gap-2">
+                  {['S', 'M', 'L', 'XL'].map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => setSelectedSize(s)}
+                      className={`w-11 h-11 rounded-sm font-display font-700 text-xs uppercase border transition-all ${
+                        selectedSize === s
+                          ? 'bg-pb-orange border-pb-orange text-white'
+                          : 'bg-pb-black border-pb-border text-pb-silver hover:border-pb-orange/40 hover:text-white'
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Quantity */}
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-3 mb-6">
                 <label className="font-display font-700 text-xs uppercase tracking-widest text-pb-muted">Qty</label>
                 <div className="flex items-center border border-pb-border rounded-sm overflow-hidden">
                   <button
@@ -167,12 +202,12 @@ export default function PdpPage() {
                   {addedToCart ? 'Added to Basket!' : 'Add to Basket'}
                 </motion.button>
                 <button
-                  onClick={() => setWishlisted(w => !w)}
+                  onClick={() => toggleWishlist(product.id)}
                   className="w-13 h-13 flex-shrink-0 border border-pb-border rounded-sm flex items-center justify-center text-pb-silver hover:border-pb-orange/40 hover:text-pb-orange transition-colors"
                   style={{ width: '52px', height: '52px' }}
-                  aria-label={wishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
+                  aria-label={wish ? 'Remove from wishlist' : 'Save to wishlist'}
                 >
-                  <Heart size={18} className={wishlisted ? 'fill-pb-orange text-pb-orange' : ''} />
+                  <Heart size={18} className={wish ? 'fill-pb-orange text-pb-orange' : ''} />
                 </button>
               </div>
 
