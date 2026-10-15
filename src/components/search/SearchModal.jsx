@@ -5,17 +5,17 @@ import { useCart } from '../../context/CartContext.jsx'
 import { products } from '../../data/products.js'
 
 const popularSearches = [
-  'Enduro Carbon', 'Trail 27.5', 'Titanium Gravel', 'Electric MTB',
-  'Fox 36 Factory', 'Shimano XT', 'Summit Helmet', 'Endura MT500'
+  'Enduro Carbon', 'Fox 38 Factory', 'Full Suspension', 'Electric MTB',
+  'Shimano XT 4-Piston', 'SRAM Transmission', 'Full Face Helmet', 'Five Ten Freerider'
 ]
 
 const categoryShortcuts = [
-  { label: 'Mountain Bikes', url: '/bikes/mountain' },
-  { label: 'Road Bikes', url: '/bikes/road' },
-  { label: 'Gravel Bikes', url: '/bikes/gravel' },
-  { label: 'Electric Bikes', url: '/bikes/electric' },
-  { label: 'Clothing & Gear', url: '/clothing' },
-  { label: 'Helmets & Protection', url: '/helmets' },
+  { label: 'Full Suspension', url: '/bikes/full-suspension' },
+  { label: 'Hardtail MTBs', url: '/bikes/hardtail' },
+  { label: 'Electric MTBs (e-MTB)', url: '/bikes/electric' },
+  { label: 'Downhill & Gravity', url: '/bikes/downhill' },
+  { label: 'Suspension Forks & Shocks', url: '/components/forks' },
+  { label: 'Helmets & Body Armour', url: '/helmets' },
 ]
 
 export default function SearchModal() {

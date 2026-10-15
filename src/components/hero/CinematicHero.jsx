@@ -147,7 +147,7 @@ export default function CinematicHero() {
             transition={{ delay: 0.7, duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
             className="text-pb-silver font-body text-lg max-w-md mb-8 leading-relaxed"
           >
-            Premium mountain bikes, road bikes & gear.
+            Premium mountain bikes, high-performance parts & trail apparel.
             <br />
             Built for riders who demand more.
           </motion.p>
@@ -160,12 +160,12 @@ export default function CinematicHero() {
             className="flex flex-wrap items-center gap-4"
           >
             <a href="/bikes" className="pb-btn-primary text-base px-7 py-3.5">
-              Shop Bikes
+              Shop Mountain Bikes
               <ArrowRight size={16} />
             </a>
             <a href="/bikes/electric" className="pb-btn-outline text-base px-7 py-3.5">
               <Zap size={15} />
-              E-Bikes
+              Electric MTBs
             </a>
           </motion.div>
 

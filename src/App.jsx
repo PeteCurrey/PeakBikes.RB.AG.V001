@@ -38,7 +38,7 @@ export default function App() {
           } />
           <Route path="/bikes" element={
             <Layout>
-              <PlpPage title="All Bikes" />
+              <PlpPage title="All Mountain Bikes" />
             </Layout>
           } />
           <Route path="/bikes/mountain" element={
@@ -46,24 +46,29 @@ export default function App() {
               <PlpPage title="Mountain Bikes" />
             </Layout>
           } />
-          <Route path="/bikes/road" element={
+          <Route path="/bikes/full-suspension" element={
             <Layout>
-              <PlpPage title="Road Bikes" />
+              <PlpPage title="Full Suspension Mountain Bikes" />
             </Layout>
           } />
-          <Route path="/bikes/gravel" element={
+          <Route path="/bikes/hardtail" element={
             <Layout>
-              <PlpPage title="Gravel Bikes" />
+              <PlpPage title="Hardtail Mountain Bikes" />
+            </Layout>
+          } />
+          <Route path="/bikes/downhill" element={
+            <Layout>
+              <PlpPage title="Downhill & Gravity Mountain Bikes" />
             </Layout>
           } />
           <Route path="/bikes/electric" element={
             <Layout>
-              <PlpPage title="Electric Bikes" />
+              <PlpPage title="Electric Mountain Bikes (e-MTB)" />
             </Layout>
           } />
           <Route path="/bikes/kids" element={
             <Layout>
-              <PlpPage title="Kids Bikes" />
+              <PlpPage title="Youth & Junior Mountain Bikes" />
             </Layout>
           } />
           <Route path="/products/:slug" element={

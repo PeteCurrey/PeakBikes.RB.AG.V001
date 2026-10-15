@@ -3,16 +3,17 @@ import { Mountain, Instagram, Facebook, Youtube, Twitter, ArrowRight } from 'luc
 
 const footerLinks = {
   shop: {
-    title: 'Shop',
+    title: 'Shop MTB',
     links: [
-      { label: 'Mountain Bikes', url: '/bikes/mountain' },
-      { label: 'Road Bikes', url: '/bikes/road' },
-      { label: 'Gravel Bikes', url: '/bikes/gravel' },
-      { label: 'Electric Bikes', url: '/bikes/electric' },
-      { label: 'Kids Bikes', url: '/bikes/kids' },
-      { label: 'Clothing', url: '/clothing' },
-      { label: 'Helmets', url: '/helmets' },
-      { label: 'Components', url: '/components' },
+      { label: 'Full Suspension MTBs', url: '/bikes/full-suspension' },
+      { label: 'Hardtail Trail MTBs', url: '/bikes/hardtail' },
+      { label: 'Electric MTBs (e-MTB)', url: '/bikes/electric' },
+      { label: 'Downhill & Gravity', url: '/bikes/downhill' },
+      { label: 'Youth & Junior MTBs', url: '/bikes/kids' },
+      { label: 'Forks & Rear Shocks', url: '/components/forks' },
+      { label: 'Hydraulic Disc Brakes', url: '/components/brakes' },
+      { label: 'Full Face & Trail Helmets', url: '/helmets' },
+      { label: 'Knee & Body Armour', url: '/clothing/pads' },
     ],
   },
   help: {
