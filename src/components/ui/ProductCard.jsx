@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingCart, Eye } from 'lucide-react'
 import Badge from './Badge.jsx'
@@ -44,7 +45,7 @@ export default function ProductCard({ product, className = '' }) {
       transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
     >
       {/* Image */}
-      <a href={`/products/${product.slug}`} className="relative block overflow-hidden aspect-[4/3] pb-img-zoom bg-pb-black-mid">
+      <Link to={`/products/${product.slug}`} className="relative block overflow-hidden aspect-[4/3] pb-img-zoom bg-pb-black-mid">
         <img
           src={product.image}
           alt={product.name}
@@ -83,19 +84,19 @@ export default function ProductCard({ product, className = '' }) {
             Quick View
           </button>
         </div>
-      </a>
+      </Link>
 
       {/* Info */}
       <div className="flex flex-col flex-1 p-4">
         <p className="text-pb-muted text-xs font-display font-semibold tracking-widest uppercase mb-1">
           {product.brand}
         </p>
-        <a
-          href={`/products/${product.slug}`}
+        <Link
+          to={`/products/${product.slug}`}
           className="font-body font-semibold text-white text-[0.9rem] leading-snug mb-3 hover:text-pb-orange transition-colors line-clamp-2"
         >
           {product.name}
-        </a>
+        </Link>
 
         <div className="mt-auto flex items-center justify-between gap-2">
           {/* Price */}

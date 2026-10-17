@@ -1,30 +1,149 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+import { useParams, useLocation, useSearchParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SlidersHorizontal, ChevronDown, Grid2X2, List, X, Check, ArrowRight, RotateCcw } from 'lucide-react'
+import { SlidersHorizontal, ChevronDown, Grid2X2, List, X, Check, ArrowRight, RotateCcw, ChevronRight } from 'lucide-react'
 import { products } from '../data/products.js'
 import ProductCard from '../components/ui/ProductCard.jsx'
 
 const categoryOptions = ['All', 'Full Suspension', 'Hardtail', 'Electric MTB', 'Components', 'Clothing', 'Helmets', 'Accessories']
-const wheelSizeOptions = ['29"', '27.5"', 'Mullet (29/27.5")']
-const travelOptions = ['140mm', '160mm', '170mm', '200mm']
+const wheelSizeOptions = ['29"', '27.5"', 'Mullet (29/27.5")', '26"', '24"']
+const travelOptions = ['100mm', '140mm', '160mm', '170mm', '200mm']
 const materialOptions = ['Carbon', 'Alloy']
-const brandOptions = ['Peak Bikes', 'Fox Racing', 'RockShox', 'Shimano', 'SRAM', 'Endura', 'Five Ten', "Peaty's"]
+const brandOptions = ['Peak Bikes', 'Fox Racing', 'RockShox', 'Shimano', 'SRAM', 'Endura', 'Five Ten', "Peaty's", 'Hope Tech', 'Renthal', 'DT Swiss', 'Maxxis']
 const sortOptions = ['Recommended', 'Price: Low to High', 'Price: High to Low', 'Top Customer Rated', 'Newest First']
 
-export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
+// Mapping from route slug to display title & category config
+const subcategoryMap = {
+  // Bikes
+  'full-suspension': { title: 'Full Suspension Mountain Bikes', category: 'Full Suspension' },
+  'hardtail': { title: 'Hardtail Mountain Bikes', category: 'Hardtail' },
+  'downhill': { title: 'Downhill & Gravity Mountain Bikes', category: 'Full Suspension', subcat: 'downhill' },
+  'electric': { title: 'Electric Mountain Bikes (e-MTB)', category: 'Electric MTB' },
+  'dirt-jump': { title: 'Dirt Jump & Pumptrack Bikes', category: 'Hardtail', subcat: 'dirt-jump' },
+  'kids': { title: 'Youth & Junior Mountain Bikes', category: 'Hardtail', subcat: 'kids' },
+  'mountain': { title: 'Mountain Bikes', category: 'All' },
+
+  // Components
+  'forks': { title: 'MTB Suspension Forks', category: 'Components', subcat: 'forks' },
+  'shocks': { title: 'MTB Rear Shocks', category: 'Components', subcat: 'shocks' },
+  'groupsets': { title: 'MTB Drivetrains & Groupsets', category: 'Components', subcat: 'groupsets' },
+  'brakes': { title: 'Hydraulic MTB Disc Brakes', category: 'Components', subcat: 'brakes' },
+  'wheels': { title: 'MTB Wheels & Wheelsets', category: 'Components', subcat: 'wheels' },
+  'tyres': { title: 'MTB Tyres & Tubeless', category: 'Components', subcat: 'tyres' },
+  'cockpit': { title: 'Handlebars, Stems & Cockpit', category: 'Components', subcat: 'cockpit' },
+  'pedals': { title: 'Flat & Clip-In MTB Pedals', category: 'Components', subcat: 'pedals' },
+
+  // Helmets & Protection
+  'full-face': { title: 'Full Face MTB Helmets', category: 'Helmets', subcat: 'full-face' },
+  'trail': { title: 'Trail & Enduro MTB Helmets', category: 'Helmets', subcat: 'trail' },
+  'pads': { title: 'Knee & Elbow Armor Pads', category: 'Clothing', subcat: 'pads' },
+  'body-armour': { title: 'Body Armour & Torso Protection', category: 'Clothing', subcat: 'body-armour' },
+  'goggles': { title: 'MTB Goggles & Eyewear', category: 'Accessories', subcat: 'goggles' },
+
+  // Clothing
+  'jackets': { title: 'Waterproof MTB Jackets', category: 'Clothing', subcat: 'jackets' },
+  'shorts': { title: 'MTB Trail Shorts & Pants', category: 'Clothing', subcat: 'shorts' },
+  'jerseys': { title: 'Technical MTB Jerseys', category: 'Clothing', subcat: 'jerseys' },
+  'shoes': { title: 'Flat Pedal & Clipless MTB Shoes', category: 'Clothing', subcat: 'shoes' },
+  'gloves': { title: 'MTB Gloves', category: 'Clothing', subcat: 'gloves' },
+  'base-layers': { title: 'Merino & Thermal Trail Base Layers', category: 'Clothing', subcat: 'base-layers' },
+
+  // Accessories
+  'mudguards': { title: 'MTB Mudguards & Fenders', category: 'Accessories', subcat: 'mudguards' },
+  'tubeless': { title: 'Tubeless Sealant & Repair Kits', category: 'Accessories', subcat: 'tubeless' },
+  'hydration': { title: 'MTB Hydration & Hip Packs', category: 'Accessories', subcat: 'hydration' },
+  'tools': { title: 'Trail Multi-Tools & Pumps', category: 'Accessories', subcat: 'tools' },
+  'lights': { title: 'High-Power MTB Night Lights', category: 'Accessories', subcat: 'lights' },
+  'cleaning': { title: 'Bike Cleaner & Workshop Lubes', category: 'Accessories', subcat: 'cleaning' },
+}
+
+const brandSlugMap = {
+  'fox': 'Fox Racing',
+  'rockshox': 'RockShox',
+  'shimano': 'Shimano',
+  'sram': 'SRAM',
+  'maxxis': 'Maxxis',
+  'santa-cruz': 'Santa Cruz',
+  'hope': 'Hope Tech',
+  'renthal': 'Renthal',
+  'five-ten': 'Five Ten',
+  'endura': 'Endura',
+  'peatys': "Peaty's",
+  'dt-swiss': 'DT Swiss',
+}
+
+export default function PlpPage({ title: defaultTitle, category: initialCategory, saleOnly = false }) {
+  const { subcat, brandSlug } = useParams()
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+
+  // Inferred states from URL and params
+  const isSalePath = saleOnly || location.pathname.startsWith('/sale')
+  const catParam = searchParams.get('cat') || searchParams.get('category')
+  const sortParam = searchParams.get('sort')
+  const brandParam = searchParams.get('brand')
+
+  // Derive subcategory info if route matches
+  const subcatInfo = subcat ? subcategoryMap[subcat] : null
+  const matchedBrand = brandSlug ? brandSlugMap[brandSlug] : (brandParam ? (brandSlugMap[brandParam] || brandParam) : null)
+
+  // Compute Page Title
+  const pageTitle = useMemo(() => {
+    if (matchedBrand) return `${matchedBrand} Mountain Bikes & Parts`
+    if (subcatInfo) return subcatInfo.title
+    if (isSalePath) return 'Mountain Bike Clearance & Deals'
+    if (defaultTitle) return defaultTitle
+    if (location.pathname.startsWith('/clothing')) return 'MTB Trail Apparel & Protection'
+    if (location.pathname.startsWith('/helmets')) return 'MTB Helmets & Head Protection'
+    if (location.pathname.startsWith('/components')) return 'Mountain Bike Components'
+    if (location.pathname.startsWith('/accessories')) return 'MTB Trail Accessories'
+    if (location.pathname.startsWith('/bikes')) return 'Mountain Bikes'
+    return 'Mountain Bikes & Gear'
+  }, [subcatInfo, matchedBrand, isSalePath, defaultTitle, location.pathname])
+
+  // Initial category calculation
+  const defaultCategory = useMemo(() => {
+    if (subcatInfo?.category) return subcatInfo.category
+    if (initialCategory) return initialCategory
+    if (catParam) {
+      if (catParam === 'bikes') return 'All'
+      if (catParam === 'components') return 'Components'
+      if (catParam === 'clothing') return 'Clothing'
+      if (catParam === 'helmets') return 'Helmets'
+      if (catParam === 'accessories') return 'Accessories'
+    }
+    if (location.pathname === '/clothing') return 'Clothing'
+    if (location.pathname === '/helmets') return 'Helmets'
+    if (location.pathname === '/components') return 'Components'
+    if (location.pathname === '/accessories') return 'Accessories'
+    if (location.pathname === '/bikes/full-suspension') return 'Full Suspension'
+    if (location.pathname === '/bikes/hardtail') return 'Hardtail'
+    if (location.pathname === '/bikes/electric') return 'Electric MTB'
+    return 'All'
+  }, [subcatInfo, initialCategory, catParam, location.pathname])
+
   // Filter states
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState(defaultCategory)
+  const [selectedSubcat, setSelectedSubcat] = useState(subcatInfo?.subcat || null)
   const [selectedWheelSize, setSelectedWheelSize] = useState([])
   const [selectedTravel, setSelectedTravel] = useState([])
   const [selectedMaterial, setSelectedMaterial] = useState([])
-  const [selectedBrands, setSelectedBrands] = useState([])
+  const [selectedBrands, setSelectedBrands] = useState(matchedBrand ? [matchedBrand] : [])
   const [inStockOnly, setInStockOnly] = useState(false)
   const [maxPrice, setMaxPrice] = useState(7000)
 
   // View & sort
-  const [sortBy, setSortBy] = useState('Recommended')
+  const initialSort = sortParam === 'new' ? 'Newest First' : 'Recommended'
+  const [sortBy, setSortBy] = useState(initialSort)
   const [gridView, setGridView] = useState('grid')
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+
+  // Synchronize when route changes
+  useEffect(() => {
+    setSelectedCategory(defaultCategory)
+    setSelectedSubcat(subcatInfo?.subcat || null)
+    setSelectedBrands(matchedBrand ? [matchedBrand] : [])
+  }, [defaultCategory, subcatInfo, matchedBrand])
 
   // Toggle helper
   const toggleItem = (list, setList, item) => {
@@ -37,6 +156,7 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
 
   const clearAllFilters = () => {
     setSelectedCategory('All')
+    setSelectedSubcat(null)
     setSelectedWheelSize([])
     setSelectedTravel([])
     setSelectedMaterial([])
@@ -46,39 +166,57 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
   }
 
   const hasActiveFilters =
-    selectedCategory !== 'All' ||
+    (selectedCategory !== 'All' && selectedCategory !== defaultCategory) ||
+    selectedSubcat !== null ||
     selectedWheelSize.length > 0 ||
     selectedTravel.length > 0 ||
     selectedMaterial.length > 0 ||
-    selectedBrands.length > 0 ||
+    (selectedBrands.length > 0 && !matchedBrand) ||
     inStockOnly ||
     maxPrice < 7000
 
   // Filter & sort logic
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
-      // Category filter
+      // Sale filter
+      if (isSalePath) {
+        const isSale = p.rrp && p.rrp > p.price
+        if (!isSale) return false
+      }
+
+      // Department / Category filter
       if (selectedCategory !== 'All') {
         if (p.category !== selectedCategory) return false
       }
+
+      // Subcategory filter (e.g. forks, brakes, jackets, pads, downhill)
+      if (selectedSubcat) {
+        if (p.subcategory !== selectedSubcat) return false
+      }
+
       // Wheel size filter
       if (selectedWheelSize.length > 0) {
         if (!p.wheelSize || !selectedWheelSize.includes(p.wheelSize)) return false
       }
+
       // Travel filter
       if (selectedTravel.length > 0) {
         if (!p.travel || !selectedTravel.includes(p.travel)) return false
       }
+
       // Material filter
       if (selectedMaterial.length > 0) {
         if (!p.frameMaterial || !selectedMaterial.includes(p.frameMaterial)) return false
       }
+
       // Brand filter
       if (selectedBrands.length > 0) {
         if (!selectedBrands.includes(p.brand)) return false
       }
+
       // In stock
       if (inStockOnly && !p.inStock) return false
+
       // Max price
       if (p.price > maxPrice) return false
 
@@ -90,7 +228,7 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
       if (sortBy === 'Newest First') return b.id - a.id
       return 0 // Recommended default
     })
-  }, [selectedCategory, selectedWheelSize, selectedTravel, selectedMaterial, selectedBrands, inStockOnly, maxPrice, sortBy])
+  }, [isSalePath, selectedCategory, selectedSubcat, selectedWheelSize, selectedTravel, selectedMaterial, selectedBrands, inStockOnly, maxPrice, sortBy])
 
   return (
     <div className="pt-[var(--pb-nav-height,112px)] min-h-screen bg-pb-black">
@@ -98,13 +236,31 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
       <div className="bg-pb-black-card border-b border-pb-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
           <nav className="flex items-center gap-2 text-xs font-body text-pb-muted mb-3">
-            <a href="/" className="hover:text-pb-orange transition-colors">Home</a>
-            <span>/</span>
-            <span className="text-white">{title}</span>
+            <Link to="/" className="hover:text-pb-orange transition-colors">Home</Link>
+            <ChevronRight size={12} />
+            <Link to="/bikes" className="hover:text-pb-orange transition-colors">Mountain Bikes</Link>
+            {selectedCategory !== 'All' && (
+              <>
+                <ChevronRight size={12} />
+                <span className="text-pb-silver">{selectedCategory}</span>
+              </>
+            )}
+            {subcatInfo && (
+              <>
+                <ChevronRight size={12} />
+                <span className="text-white">{subcatInfo.title}</span>
+              </>
+            )}
+            {matchedBrand && (
+              <>
+                <ChevronRight size={12} />
+                <span className="text-white">{matchedBrand}</span>
+              </>
+            )}
           </nav>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h1 className="pb-title text-white tracking-tight" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)' }}>
-              {title}
+              {pageTitle}
             </h1>
             <span className="text-pb-muted font-display font-700 text-xs uppercase tracking-widest">
               Showing {filteredProducts.length} of {products.length} Products
@@ -122,7 +278,10 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
             {categoryOptions.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => {
+                  setSelectedCategory(cat)
+                  setSelectedSubcat(null)
+                }}
                 className={`flex-shrink-0 px-3.5 py-1.5 rounded-sm font-display font-700 text-xs uppercase tracking-wider transition-all ${
                   selectedCategory === cat
                     ? 'bg-pb-orange text-white shadow-sm'
@@ -197,6 +356,12 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-pb-black border border-pb-border text-xs text-white">
                 {selectedCategory}
                 <button onClick={() => setSelectedCategory('All')} className="text-pb-muted hover:text-white"><X size={12} /></button>
+              </span>
+            )}
+            {selectedSubcat && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-pb-black border border-pb-border text-xs text-white">
+                Subcategory: {selectedSubcat}
+                <button onClick={() => setSelectedSubcat(null)} className="text-pb-muted hover:text-white"><X size={12} /></button>
               </span>
             )}
             {selectedWheelSize.map(w => (
@@ -380,9 +545,9 @@ export default function PlpPage({ title = 'Mountain Bikes & Gear' }) {
               </div>
               <input
                 type="range"
-                min="50"
+                min="20"
                 max="7000"
-                step="50"
+                step="20"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-pb-orange cursor-pointer"

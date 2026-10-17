@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronDown, ChevronRight, Truck, CreditCard, PhoneCall, RotateCcw } from 'lucide-react'
 import { navigation } from '../../data/navigation.js'
@@ -76,9 +77,9 @@ export default function MobileDrawer({ isOpen, onClose }) {
                         >
                           <div className="py-2 px-4">
                             {item.children?.map((child) => (
-                              <a
+                              <Link
                                 key={child.label}
-                                href={child.url}
+                                to={child.url}
                                 onClick={onClose}
                                 className={`flex items-center gap-3 px-3 py-3 rounded-sm text-sm font-body font-500 transition-colors ${
                                   child.highlight
@@ -91,7 +92,7 @@ export default function MobileDrawer({ isOpen, onClose }) {
                                 )}
                                 {child.label}
                                 {child.highlight && <ChevronRight size={12} className="ml-auto" />}
-                              </a>
+                              </Link>
                             ))}
                           </div>
                         </motion.div>
@@ -104,14 +105,14 @@ export default function MobileDrawer({ isOpen, onClose }) {
                 <div className="px-5 py-3 mt-2">
                   <p className="text-pb-muted text-xs font-display font-700 uppercase tracking-widest mb-3">Help & Services</p>
                   {navigation.utility.map((item) => (
-                    <a
+                    <Link
                       key={item.label}
-                      href={item.url}
+                      to={item.url}
                       onClick={onClose}
                       className="block py-2.5 text-pb-silver font-body text-sm hover:text-pb-orange transition-colors"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </nav>

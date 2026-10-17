@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
@@ -6,8 +7,8 @@ import { ArrowRight } from 'lucide-react'
 function BikeOnColourCard({ card, size = 'large' }) {
   const isLarge = size === 'large'
   return (
-    <a
-      href={card.cta?.url || '#'}
+    <Link
+      to={card.cta?.url || '#'}
       className={`group relative flex flex-col justify-end overflow-hidden rounded-sm pb-card-hover ${isLarge ? 'h-full min-h-[380px]' : 'h-full min-h-[180px]'}`}
       style={{ backgroundColor: card.bgColor || '#0a1612' }}
     >
@@ -61,14 +62,14 @@ function BikeOnColourCard({ card, size = 'large' }) {
           </span>
         )}
       </div>
-    </a>
+    </Link>
   )
 }
 
 function SmallCard({ card }) {
   return (
-    <a
-      href={card.url || '#'}
+    <Link
+      to={card.url || '#'}
       className="group relative flex flex-col justify-end overflow-hidden rounded-sm pb-card-hover min-h-[180px]"
     >
       {/* Image */}
@@ -104,7 +105,7 @@ function SmallCard({ card }) {
           Shop Now <ArrowRight size={12} />
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

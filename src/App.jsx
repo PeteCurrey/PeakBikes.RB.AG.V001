@@ -5,10 +5,14 @@ import Footer from './components/footer/Footer.jsx'
 import CartDrawer from './components/cart/CartDrawer.jsx'
 import SearchModal from './components/search/SearchModal.jsx'
 import QuickViewModal from './components/ui/QuickViewModal.jsx'
+import ScrollToTop from './components/common/ScrollToTop.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import HomePage from './pages/HomePage.jsx'
 import PlpPage from './pages/PlpPage.jsx'
 import PdpPage from './pages/PdpPage.jsx'
+import InfoPage from './pages/InfoPage.jsx'
+import BrandsPage from './pages/BrandsPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 function Layout({ children }) {
   return (
@@ -30,75 +34,127 @@ export default function App() {
   return (
     <CartProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
+          {/* Home */}
           <Route path="/" element={
             <Layout>
               <HomePage />
             </Layout>
           } />
+
+          {/* Bikes & Subcategories */}
           <Route path="/bikes" element={
             <Layout>
               <PlpPage title="All Mountain Bikes" />
             </Layout>
           } />
-          <Route path="/bikes/mountain" element={
+          <Route path="/bikes/:subcat" element={
             <Layout>
-              <PlpPage title="Mountain Bikes" />
+              <PlpPage />
             </Layout>
           } />
-          <Route path="/bikes/full-suspension" element={
-            <Layout>
-              <PlpPage title="Full Suspension Mountain Bikes" />
-            </Layout>
-          } />
-          <Route path="/bikes/hardtail" element={
-            <Layout>
-              <PlpPage title="Hardtail Mountain Bikes" />
-            </Layout>
-          } />
-          <Route path="/bikes/downhill" element={
-            <Layout>
-              <PlpPage title="Downhill & Gravity Mountain Bikes" />
-            </Layout>
-          } />
-          <Route path="/bikes/electric" element={
-            <Layout>
-              <PlpPage title="Electric Mountain Bikes (e-MTB)" />
-            </Layout>
-          } />
-          <Route path="/bikes/kids" element={
-            <Layout>
-              <PlpPage title="Youth & Junior Mountain Bikes" />
-            </Layout>
-          } />
+
+          {/* Product Detail Page */}
           <Route path="/products/:slug" element={
             <Layout>
               <PdpPage />
             </Layout>
           } />
-          <Route path="/clothing" element={
-            <Layout>
-              <PlpPage title="Clothing" />
-            </Layout>
-          } />
-          <Route path="/helmets" element={
-            <Layout>
-              <PlpPage title="Helmets" />
-            </Layout>
-          } />
-          <Route path="/accessories" element={
-            <Layout>
-              <PlpPage title="Accessories" />
-            </Layout>
-          } />
+
+          {/* Components & Subcategories */}
           <Route path="/components" element={
             <Layout>
-              <PlpPage title="Components" />
+              <PlpPage title="MTB Components" category="Components" />
             </Layout>
           } />
+          <Route path="/components/:subcat" element={
+            <Layout>
+              <PlpPage />
+            </Layout>
+          } />
+
+          {/* Clothing & Subcategories */}
+          <Route path="/clothing" element={
+            <Layout>
+              <PlpPage title="MTB Trail Clothing" category="Clothing" />
+            </Layout>
+          } />
+          <Route path="/clothing/:subcat" element={
+            <Layout>
+              <PlpPage />
+            </Layout>
+          } />
+
+          {/* Helmets & Subcategories */}
+          <Route path="/helmets" element={
+            <Layout>
+              <PlpPage title="MTB Helmets & Protection" category="Helmets" />
+            </Layout>
+          } />
+          <Route path="/helmets/:subcat" element={
+            <Layout>
+              <PlpPage />
+            </Layout>
+          } />
+
+          {/* Accessories & Subcategories */}
+          <Route path="/accessories" element={
+            <Layout>
+              <PlpPage title="MTB Trail Accessories" category="Accessories" />
+            </Layout>
+          } />
+          <Route path="/accessories/:subcat" element={
+            <Layout>
+              <PlpPage />
+            </Layout>
+          } />
+
+          {/* Clearance & Sale */}
           <Route path="/sale" element={
             <Layout>
-              <PlpPage title="Sale" />
+              <PlpPage title="Clearance & Deals" saleOnly={true} />
+            </Layout>
+          } />
+
+          {/* Brands Directory & Brand Products */}
+          <Route path="/brands" element={
+            <Layout>
+              <BrandsPage />
+            </Layout>
+          } />
+          <Route path="/brands/:brandSlug" element={
+            <Layout>
+              <PlpPage />
+            </Layout>
+          } />
+
+          {/* Utility & Informational Guides */}
+          <Route path="/finance" element={
+            <Layout>
+              <InfoPage pageType="finance" />
+            </Layout>
+          } />
+          <Route path="/cycle-to-work" element={
+            <Layout>
+              <InfoPage pageType="cycle-to-work" />
+            </Layout>
+          } />
+          <Route path="/advice" element={
+            <Layout>
+              <InfoPage pageType="advice" />
+            </Layout>
+          } />
+          <Route path="/help" element={
+            <Layout>
+              <InfoPage pageType="help" />
+            </Layout>
+          } />
+
+          {/* 404 Fallback */}
+          <Route path="*" element={
+            <Layout>
+              <NotFoundPage />
             </Layout>
           } />
         </Routes>

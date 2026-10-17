@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ChevronDown, ArrowRight, Zap, Mountain } from 'lucide-react'
 
@@ -159,14 +160,14 @@ export default function CinematicHero() {
             transition={{ delay: 0.9, duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
             className="flex flex-wrap items-center gap-4"
           >
-            <a href="/bikes" className="pb-btn-primary text-base px-7 py-3.5">
+            <Link to="/bikes" className="pb-btn-primary text-base px-7 py-3.5">
               Shop Mountain Bikes
               <ArrowRight size={16} />
-            </a>
-            <a href="/bikes/electric" className="pb-btn-outline text-base px-7 py-3.5">
+            </Link>
+            <Link to="/bikes/electric" className="pb-btn-outline text-base px-7 py-3.5">
               <Zap size={15} />
               Electric MTBs
-            </a>
+            </Link>
           </motion.div>
 
           {/* Stats strip */}

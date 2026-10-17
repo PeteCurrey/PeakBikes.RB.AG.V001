@@ -194,9 +194,9 @@ export default function PdpPage() {
                   <Zap size={14} className="text-pb-orange" />
                   Spread the cost from <strong className="text-white font-mono">£{monthlyFinance12}/mo</strong> at 0% APR
                 </span>
-                <span className="text-pb-orange font-display font-700 uppercase tracking-wider hover:underline cursor-pointer">
-                  Options
-                </span>
+                <Link to="/finance" className="text-pb-orange font-display font-700 uppercase tracking-wider hover:underline">
+                  Options →
+                </Link>
               </div>
             </div>
 

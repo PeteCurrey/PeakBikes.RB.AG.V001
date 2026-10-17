@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight } from 'lucide-react'
 
@@ -38,9 +39,9 @@ export default function MegaMenu({ item, isOpen, onClose }) {
                   </p>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-1">
                     {item.children?.map((child) => (
-                      <a
+                      <Link
                         key={child.label}
-                        href={child.url}
+                        to={child.url}
                         onClick={onClose}
                         className={`group flex items-center gap-3 px-3 py-2.5 rounded-sm transition-colors duration-150 ${
                           child.highlight
@@ -64,7 +65,7 @@ export default function MegaMenu({ item, isOpen, onClose }) {
                         {child.highlight && (
                           <ChevronRight size={13} className="ml-auto flex-shrink-0 opacity-60" />
                         )}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -72,7 +73,7 @@ export default function MegaMenu({ item, isOpen, onClose }) {
                 {/* Editorial image — right col */}
                 <div className="col-span-1">
                   {item.image && (
-                    <a href={item.url} onClick={onClose} className="group relative block overflow-hidden rounded-sm aspect-[4/3] pb-img-zoom">
+                    <Link to={item.url} onClick={onClose} className="group relative block overflow-hidden rounded-sm aspect-[4/3] pb-img-zoom">
                       <img
                         src={item.image}
                         alt={item.imageAlt}
@@ -88,7 +89,7 @@ export default function MegaMenu({ item, isOpen, onClose }) {
                           Shop All →
                         </span>
                       </div>
-                    </a>
+                    </Link>
                   )}
                 </div>
               </div>

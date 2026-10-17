@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import ProductCard from '../ui/ProductCard.jsx'
@@ -61,12 +62,12 @@ export default function ProductSlider({ title, products, viewAllUrl = '/bikes' }
             >
               <ChevronRight size={16} />
             </button>
-            <a
-              href={viewAllUrl}
+            <Link
+              to={viewAllUrl}
               className="hidden sm:flex items-center gap-1.5 ml-2 text-pb-orange font-display font-700 text-sm uppercase tracking-wide hover:gap-2.5 transition-all"
             >
               View All <ArrowRight size={14} />
-            </a>
+            </Link>
           </div>
         </motion.div>
 
@@ -93,9 +94,9 @@ export default function ProductSlider({ title, products, viewAllUrl = '/bikes' }
 
         {/* Mobile "View All" */}
         <div className="mt-5 sm:hidden text-center">
-          <a href={viewAllUrl} className="pb-btn-outline text-sm">
+          <Link to={viewAllUrl} className="pb-btn-outline text-sm">
             View All {title} <ArrowRight size={14} />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Mountain, Instagram, Facebook, Youtube, Twitter, ArrowRight } from 'lucide-react'
 
 const footerLinks = {
@@ -59,7 +60,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2 mb-5 group">
+            <Link to="/" className="flex items-center gap-2 mb-5 group">
               <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
                 <rect width="36" height="36" rx="3" fill="#0a1612"/>
                 <path d="M18 5 L31 30 H5 Z" fill="#ff5c00" opacity="0.95"/>
@@ -70,7 +71,7 @@ export default function Footer() {
                 <span className="block font-display font-900 text-lg text-white uppercase tracking-tight group-hover:text-pb-orange transition-colors">Peak Bikes</span>
                 <span className="block font-display font-400 text-[8px] text-pb-muted uppercase tracking-[0.2em]">Ride Further. Go Harder.</span>
               </div>
-            </a>
+            </Link>
             <p className="font-body text-pb-muted text-sm leading-relaxed mb-5">
               Premium bikes and cycling gear for every rider. Expert advice, fast UK delivery, 0% finance available.
             </p>
@@ -98,12 +99,12 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.url}
+                    <Link
+                      to={link.url}
                       className="font-body text-pb-muted text-sm hover:text-pb-orange transition-colors duration-150"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

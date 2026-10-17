@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Button({
   children,
   variant = 'primary',
   size = 'md',
   href,
+  to,
   onClick,
   className = '',
   icon,
@@ -22,10 +24,19 @@ export default function Button({
   }
 
   const cls = `${base} ${sizes[size]} ${className}`
+  const target = to || href
 
-  if (href) {
+  if (target) {
+    if (target.startsWith('/') && !target.startsWith('//')) {
+      return (
+        <Link to={target} className={cls} {...props}>
+          {children}
+          {icon && <span className="flex-shrink-0">{icon}</span>}
+        </Link>
+      )
+    }
     return (
-      <a href={href} className={cls} {...props}>
+      <a href={target} className={cls} {...props}>
         {children}
         {icon && <span className="flex-shrink-0">{icon}</span>}
       </a>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ArrowRight } from 'lucide-react'
 
@@ -49,12 +50,12 @@ export default function SiteWideBanner() {
               <span className="inline md:hidden font-body normal-case font-500 opacity-95 text-xs">
                 Free UK Delivery over £50 · 0% Finance
               </span>
-              <a
-                href="/bikes"
+              <Link
+                to="/bikes"
                 className="inline-flex items-center gap-1 text-white underline underline-offset-2 font-display font-800 text-[11px] sm:text-xs tracking-widest uppercase hover:opacity-85 transition-opacity ml-1"
               >
                 Shop Now <ArrowRight size={12} />
-              </a>
+              </Link>
             </p>
 
             <button

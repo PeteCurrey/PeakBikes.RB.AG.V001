@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ShoppingCart, Star, Heart, ArrowRight, ShieldCheck, Zap } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
@@ -149,13 +150,13 @@ export default function QuickViewModal() {
                   </button>
                 </div>
 
-                <a
-                  href={`/products/${p.slug}`}
+                <Link
+                  to={`/products/${p.slug}`}
                   onClick={closeQuickView}
                   className="flex items-center justify-center gap-1.5 text-xs font-display font-700 uppercase text-pb-muted hover:text-pb-orange transition-colors pt-2"
                 >
                   View Full Product Specifications <ArrowRight size={12} />
-                </a>
+                </Link>
               </div>
 
             </div>

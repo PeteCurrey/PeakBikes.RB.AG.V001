@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Bike, Wrench, Package } from 'lucide-react'
 
@@ -7,22 +8,22 @@ const services = [
     icon: Bike,
     title: '0% Finance',
     subtitle: 'On orders over £99',
-    description: 'Spread the cost of your new bike or gear with our 0% APR finance options. Available on orders over £99 through PayPal Credit, Klarna, and Novuna.',
-    cta: { text: 'Learn More', url: '/finance' },
+    description: 'Spread the cost of your new bike or gear with our 0% APR finance options. Available on orders over £99 with instant online decision.',
+    cta: { text: 'Calculate Payments', url: '/finance' },
   },
   {
     icon: Wrench,
     title: 'Expert Builds',
     subtitle: 'Every bike built by hand',
-    description: 'Every bike we sell is fully assembled and inspected by our expert mechanics before it reaches you. PDI checked and ready to ride.',
-    cta: { text: 'Our Promise', url: '/about' },
+    description: 'Every bike we sell is fully assembled and inspected by Cytech accredited mechanics before it reaches you. 42-point PDI checked.',
+    cta: { text: 'Workshop Guarantee', url: '/help' },
   },
   {
     icon: Package,
     title: 'Free UK Delivery',
     subtitle: 'On orders over £50',
-    description: 'Fast, free delivery on orders over £50. Bikes delivered fully built in specialist packaging. Easy returns within 30 days.',
-    cta: { text: 'Delivery Info', url: '/delivery' },
+    description: 'Fast, free delivery on orders over £50. Bikes delivered fully built in specialist heavy-duty packaging with pedals and tool kit.',
+    cta: { text: 'Delivery & Returns', url: '/help' },
   },
 ]
 
@@ -68,12 +69,12 @@ export default function FinanceBanner() {
                 {description}
               </p>
               {cta && (
-                <a
-                  href={cta.url}
+                <Link
+                  to={cta.url}
                   className="mt-5 pb-btn-ghost text-sm"
                 >
                   {cta.text} →
-                </a>
+                </Link>
               )}
 
               {/* Corner accent */}

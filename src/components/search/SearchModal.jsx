@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Search, ArrowRight, Tag, Sparkles } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
@@ -109,9 +110,9 @@ export default function SearchModal() {
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredProducts.map((p) => (
-                      <a
+                      <Link
                         key={p.id}
-                        href={`/products/${p.slug}`}
+                        to={`/products/${p.slug}`}
                         onClick={closeSearch}
                         className="group flex gap-4 p-3 bg-pb-black-card border border-pb-border rounded-sm hover:border-pb-orange/50 transition-all"
                       >
@@ -123,7 +124,7 @@ export default function SearchModal() {
                           <h4 className="font-body text-sm font-semibold text-white group-hover:text-pb-orange transition-colors truncate">{p.name}</h4>
                           <span className="font-display font-800 text-sm text-white mt-1">£{p.price.toLocaleString()}</span>
                         </div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -156,9 +157,9 @@ export default function SearchModal() {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {categoryShortcuts.map((cat) => (
-                  <a
+                  <Link
                     key={cat.label}
-                    href={cat.url}
+                    to={cat.url}
                     onClick={closeSearch}
                     className="flex items-center justify-between p-3.5 bg-pb-black-card border border-pb-border rounded-sm hover:border-pb-orange/40 group transition-all"
                   >
@@ -166,7 +167,7 @@ export default function SearchModal() {
                       {cat.label}
                     </span>
                     <ArrowRight size={14} className="text-pb-muted group-hover:text-pb-orange group-hover:translate-x-1 transition-all" />
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

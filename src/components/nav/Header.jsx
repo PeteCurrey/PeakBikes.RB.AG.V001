@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Search, Heart, ShoppingCart, Menu, User, MapPin } from 'lucide-react'
 import { navigation } from '../../data/navigation.js'
@@ -10,7 +11,7 @@ import { useCart } from '../../context/CartContext.jsx'
 // Peak Bikes Logo SVG
 function PeakLogo() {
   return (
-    <a href="/" className="flex items-center gap-2 group flex-shrink-0">
+    <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
       <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="36" height="36" rx="3" fill="#050d0a"/>
         <path d="M18 5 L31 30 H5 Z" fill="#ff5c00" opacity="0.95"/>
@@ -25,7 +26,7 @@ function PeakLogo() {
           Bikes
         </span>
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -106,8 +107,8 @@ export default function Header() {
                 onMouseLeave={handleMouseLeave}
                 className="relative"
               >
-                <a
-                  href={item.url}
+                <Link
+                  to={item.url}
                   className={`relative flex items-center h-[var(--pb-header-height)] px-4 font-display font-700 text-[0.88rem] uppercase tracking-wide transition-colors duration-150 ${
                     item.highlight
                       ? 'text-pb-orange hover:text-pb-orange-bright'
@@ -123,7 +124,7 @@ export default function Header() {
                       activeMenu === item.id ? 'scale-x-100' : 'scale-x-0'
                     }`}
                   />
-                </a>
+                </Link>
               </div>
             ))}
           </nav>
@@ -131,13 +132,13 @@ export default function Header() {
           {/* Utility nav — right */}
           <div className="hidden lg:flex items-center gap-1 ml-auto flex-shrink-0">
             {navigation.utility.slice(0, 2).map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.url}
+                to={item.url}
                 className="px-3 py-2 text-pb-muted hover:text-white font-body text-xs font-500 transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -150,15 +151,15 @@ export default function Header() {
             >
               <Search size={19} className="group-hover:scale-105 transition-transform" />
             </button>
-            <a
-              href="/bikes"
+            <Link
+              to="/bikes"
               className="w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors"
               aria-label="Account"
             >
               <User size={19} />
-            </a>
-            <a
-              href="/bikes"
+            </Link>
+            <Link
+              to="/bikes"
               className="relative w-10 h-10 hidden sm:flex items-center justify-center text-pb-silver hover:text-white transition-colors"
               aria-label={`Wishlist (${wishlist.length} items)`}
             >
@@ -168,7 +169,7 @@ export default function Header() {
                   {wishlist.length}
                 </span>
               )}
-            </a>
+            </Link>
             <button
               onClick={openCart}
               className="relative w-10 h-10 flex items-center justify-center text-pb-silver hover:text-white transition-colors"
